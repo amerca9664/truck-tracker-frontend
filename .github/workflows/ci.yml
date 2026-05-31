@@ -6,12 +6,12 @@ on:
 
 jobs:
   listFrontend:
-    runs-on: ubuntu-lastest
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
       - name: configuracion pnpm
         uses: pnpm/action-setup@v2
         with:
           version: 7
-      - name: install dependencies
+      - name: Lint
         run: pnpm lint
