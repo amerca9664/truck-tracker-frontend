@@ -1,45 +1,48 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
+import Swal from 'sweetalert2';
 import TruckForm from './components/TruckForm';
 import TruckList from './components/TruckList';
-import { getTrucks, createTruck, updateTruck, deleteTruck } from './services/api';
+import { useTrucks } from './hooks/useTrucks';
+import { createTruck, updateTruck, deleteTruck } from './services/api';
 
 function App() {
-  const [trucks, setTrucks] = useState([]);
+  const { trucks, error, refresh, setError } = useTrucks();
   const [editingTruck, setEditingTruck] = useState(null);
-  const [error, setError] = useState(null);
-
-  const loadTrucks = async () => {
-    try {
-      const data = await getTrucks();
-      setTrucks(data.data);
-    } catch (err) {
-      setError(err.message);
-    }
-  };
-
-  useEffect(() => {
-    loadTrucks();
-  }, []);
 
   const handleSubmit = async (formData) => {
     try {
       if (editingTruck) {
         await updateTruck(editingTruck._id, formData);
         setEditingTruck(null);
+        Swal.fire('Actualizado', 'Registro actualizado correctamente', 'success');
       } else {
         await createTruck(formData);
+        Swal.fire('Registrado', 'Camion registrado correctamente', 'success');
       }
-      await loadTrucks();
+      refresh();
     } catch (err) {
       setError(err.message);
     }
   };
 
   const handleDelete = async (id) => {
-    if (!confirm('Eliminar este registro?')) return;
+    const result = await Swal.fire({
+      title: 'Eliminar registro?',
+      text: 'No podras revertir esta accion',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#3085d6',
+      confirmButtonText: 'Si, eliminar',
+      cancelButtonText: 'Cancelar',
+    });
+
+    if (!result.isConfirmed) return;
+
     try {
       await deleteTruck(id);
-      await loadTrucks();
+      Swal.fire('Eliminado', 'Registro eliminado correctamente', 'success');
+      refresh();
     } catch (err) {
       setError(err.message);
     }
