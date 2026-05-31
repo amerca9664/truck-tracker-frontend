@@ -1,0 +1,17 @@
+name: ci tests
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  listFrontend:
+    runs-on: ubuntu-lastest
+    steps:
+      - uses: actions/checkout@v6
+      - name: configuracion pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 7
+      - name: install dependencies
+        run: pnpm lint
