@@ -65,6 +65,7 @@ function App() {
         )}
 
         <TruckForm
+          key={editingTruck?._id || 'new'}
           onSubmit={handleSubmit}
           initialData={editingTruck}
           onCancel={() => setEditingTruck(null)}

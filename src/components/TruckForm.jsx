@@ -7,8 +7,18 @@ const INITIAL_STATE = {
   carga_contenida: '',
 };
 
+const formatInitialData = (data) => {
+  if (!data) return INITIAL_STATE;
+  return {
+    ...data,
+    hora_llegada: data.hora_llegada
+      ? data.hora_llegada.slice(0, 16)
+      : INITIAL_STATE.hora_llegada,
+  };
+};
+
 export default function TruckForm({ onSubmit, initialData, onCancel }) {
-  const [form, setForm] = useState(initialData || INITIAL_STATE);
+  const [form, setForm] = useState(() => formatInitialData(initialData));
   const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
