@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 
 const INITIAL_STATE = {
   modelo: '',
@@ -10,19 +10,6 @@ const INITIAL_STATE = {
 export default function TruckForm({ onSubmit, initialData, onCancel }) {
   const [form, setForm] = useState(initialData || INITIAL_STATE);
   const [loading, setLoading] = useState(false);
-
-  useEffect(() => {
-    if (initialData) {
-      setForm({
-        ...initialData,
-        hora_llegada: initialData.hora_llegada
-          ? initialData.hora_llegada.slice(0, 16)
-          : INITIAL_STATE.hora_llegada,
-      });
-    } else {
-      setForm(INITIAL_STATE);
-    }
-  }, [initialData]);
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
