@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 const INITIAL_STATE = {
   modelo: '',
@@ -10,6 +10,19 @@ const INITIAL_STATE = {
 export default function TruckForm({ onSubmit, initialData, onCancel }) {
   const [form, setForm] = useState(initialData || INITIAL_STATE);
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    if (initialData) {
+      setForm({
+        ...initialData,
+        hora_llegada: initialData.hora_llegada
+          ? initialData.hora_llegada.slice(0, 16)
+          : INITIAL_STATE.hora_llegada,
+      });
+    } else {
+      setForm(INITIAL_STATE);
+    }
+  }, [initialData]);
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -36,8 +49,9 @@ export default function TruckForm({ onSubmit, initialData, onCancel }) {
       </h2>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Modelo</label>
+          <label htmlFor="modelo" className="block text-sm font-medium text-gray-700 mb-1">Modelo</label>
           <input
+            id="modelo"
             type="text"
             name="modelo"
             value={form.modelo}
@@ -48,8 +62,9 @@ export default function TruckForm({ onSubmit, initialData, onCancel }) {
           />
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Matricula</label>
+          <label htmlFor="matricula" className="block text-sm font-medium text-gray-700 mb-1">Matricula</label>
           <input
+            id="matricula"
             type="text"
             name="matricula"
             value={form.matricula}
@@ -60,8 +75,9 @@ export default function TruckForm({ onSubmit, initialData, onCancel }) {
           />
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Hora de Llegada</label>
+          <label htmlFor="hora_llegada" className="block text-sm font-medium text-gray-700 mb-1">Hora de Llegada</label>
           <input
+            id="hora_llegada"
             type="datetime-local"
             name="hora_llegada"
             value={form.hora_llegada}
@@ -71,8 +87,9 @@ export default function TruckForm({ onSubmit, initialData, onCancel }) {
           />
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Carga Contenida</label>
+          <label htmlFor="carga_contenida" className="block text-sm font-medium text-gray-700 mb-1">Carga Contenida</label>
           <input
+            id="carga_contenida"
             type="text"
             name="carga_contenida"
             value={form.carga_contenida}
