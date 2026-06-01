@@ -8,7 +8,7 @@ export function useTrucks() {
   const [refreshKey, setRefreshKey] = useState(0);
 
   useEffect(() => {
-    
+    let cancelled = false;
     getTrucks()
       .then((data) => {
         if (!cancelled) setTrucks(data.data);
