@@ -1,8 +1,6 @@
 {
-	"pull-request-header": {
-		"description": "Customize the release pull request header.",
-		"type": "string"
-	},
+	"pull-request-header": "Releaseme esta",
+
 	"packages": {
 		".": {
 			"release-type": "node"
