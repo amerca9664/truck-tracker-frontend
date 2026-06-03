@@ -16,7 +16,7 @@ const formatInitialData = (data) => {
       : INITIAL_STATE.hora_llegada,
   };
 };
-
+//HOLA
 export default function TruckForm({ onSubmit, initialData, onCancel }) {
   const [form, setForm] = useState(() => formatInitialData(initialData));
   const [loading, setLoading] = useState(false);
