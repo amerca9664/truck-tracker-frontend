@@ -1,0 +1,11 @@
+{
+	"pull-request-header": {
+		"description": "Customize the release pull request header.",
+		"type": "string"
+	},
+	"packages": {
+		".": {
+			"release-type": "node"
+		}
+	}
+}
