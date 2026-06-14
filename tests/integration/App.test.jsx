@@ -29,7 +29,7 @@ describe('App (integracion)', () => {
   });
 
   it('debe cargar y mostrar los camiones al iniciar', async () => {
-    getTrucks.mockResolvedValue({ data: mockTrucks });
+    getTrucks.mockResolvedValue({ data: mockTrucks, total: 1, totalPages: 1, page: 1 });
 
     render(<App />);
 
@@ -42,13 +42,13 @@ describe('App (integracion)', () => {
   });
 
   it('debe mostrar el titulo principal', () => {
-    getTrucks.mockResolvedValue({ data: [] });
+    getTrucks.mockResolvedValue({ data: [], total: 0, totalPages: 0, page: 1 });
     render(<App />);
     expect(screen.getByText('Registro de Llegada de Camiones')).toBeInTheDocument();
   });
 
   it('debe crear un nuevo camion y refrescar la lista', async () => {
-    getTrucks.mockResolvedValue({ data: [] });
+    getTrucks.mockResolvedValue({ data: [], total: 0, totalPages: 0, page: 1 });
     createTruck.mockResolvedValue({ success: true });
 
     const user = userEvent.setup();
@@ -56,6 +56,12 @@ describe('App (integracion)', () => {
 
     await waitFor(() => {
       expect(getTrucks).toHaveBeenCalled();
+    });
+
+    await user.click(screen.getByText('+ Nuevo Camion'));
+
+    await waitFor(() => {
+      expect(screen.getByLabelText(/modelo/i)).toBeInTheDocument();
     });
 
     await user.type(screen.getByLabelText(/modelo/i), 'Mercedes Actros');
@@ -76,7 +82,7 @@ describe('App (integracion)', () => {
   });
 
   it('debe editar un camion existente', async () => {
-    getTrucks.mockResolvedValue({ data: mockTrucks });
+    getTrucks.mockResolvedValue({ data: mockTrucks, total: 1, totalPages: 1, page: 1 });
     updateTruck.mockResolvedValue({ success: true });
 
     const user = userEvent.setup();
@@ -89,7 +95,10 @@ describe('App (integracion)', () => {
     const editButtons = screen.getAllByText('Editar');
     await user.click(editButtons[0]);
 
-    expect(screen.getByText('Editar Camion')).toBeInTheDocument();
+    await waitFor(() => {
+      expect(screen.getByText('Editar Camion')).toBeInTheDocument();
+    });
+
     await waitFor(() => {
       expect(screen.getByLabelText(/modelo/i).value).toBe('Volvo FH16');
     });
@@ -114,7 +123,7 @@ describe('App (integracion)', () => {
   });
 
   it('debe eliminar un camion al confirmar', async () => {
-    getTrucks.mockResolvedValue({ data: mockTrucks });
+    getTrucks.mockResolvedValue({ data: mockTrucks, total: 1, totalPages: 1, page: 1 });
     deleteTruck.mockResolvedValue({ success: true });
     Swal.fire.mockResolvedValue({ isConfirmed: true });
 
@@ -140,7 +149,7 @@ describe('App (integracion)', () => {
   });
 
   it('debe pedir confirmacion antes de eliminar', async () => {
-    getTrucks.mockResolvedValue({ data: mockTrucks });
+    getTrucks.mockResolvedValue({ data: mockTrucks, total: 1, totalPages: 1, page: 1 });
     Swal.fire.mockResolvedValue({ isConfirmed: false });
 
     const user = userEvent.setup();
@@ -170,5 +179,14 @@ describe('App (integracion)', () => {
     await waitFor(() => {
       expect(screen.getByText('Error de conexion')).toBeInTheDocument();
     });
+  });
+
+  it('debe tener campos de filtro de fecha y busqueda', () => {
+    getTrucks.mockResolvedValue({ data: [], total: 0, totalPages: 0, page: 1 });
+    render(<App />);
+
+    expect(screen.getByPlaceholderText(/buscar por modelo/i)).toBeInTheDocument();
+    expect(screen.getByLabelText(/desde/i)).toBeInTheDocument();
+    expect(screen.getByLabelText(/hasta/i)).toBeInTheDocument();
   });
 });

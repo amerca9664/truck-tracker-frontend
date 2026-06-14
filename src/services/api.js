@@ -1,7 +1,14 @@
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000/api';
 
-export const getTrucks = async () => {
-  const response = await fetch(`${API_URL}/trucks`);
+export const getTrucks = async ({ page = 1, limit = 10, search = '', dateFrom = '', dateTo = '' } = {}) => {
+  const params = new URLSearchParams();
+  params.set('page', page);
+  params.set('limit', limit);
+  if (search) params.set('search', search);
+  if (dateFrom) params.set('dateFrom', dateFrom);
+  if (dateTo) params.set('dateTo', dateTo);
+
+  const response = await fetch(`${API_URL}/trucks?${params.toString()}`);
   if (!response.ok) throw new Error('Error al obtener camiones');
   return response.json();
 };

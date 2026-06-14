@@ -40,11 +40,8 @@ const TruckForm = forwardRef(function TruckForm({ onSubmit, initialData, onCance
   };
 
   return (
-    <form onSubmit={handleSubmit} className="bg-white rounded-lg shadow-md p-6 mb-6">
-      <h2 className="text-xl font-semibold mb-4 text-gray-800">
-        {initialData ? 'Editar Camion' : 'Registrar Llegada'}
-      </h2>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+    <form onSubmit={handleSubmit} className="space-y-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div>
           <label htmlFor="modelo" className="block text-sm font-medium text-gray-700 mb-1">Modelo</label>
           <input
@@ -94,11 +91,11 @@ const TruckForm = forwardRef(function TruckForm({ onSubmit, initialData, onCance
             onChange={handleChange}
             required
             className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-            placeholder="Ej:Electrodomesticos"
+            placeholder="Ej: Electrodomesticos"
           />
         </div>
       </div>
-      <div className="flex gap-2 mt-4">
+      <div className="flex gap-2 pt-2">
         <button
           type="submit"
           disabled={loading}
@@ -106,15 +103,13 @@ const TruckForm = forwardRef(function TruckForm({ onSubmit, initialData, onCance
         >
           {loading ? 'Guardando...' : initialData ? 'Actualizar' : 'Registrar'}
         </button>
-        {onCancel && (
-          <button
-            type="button"
-            onClick={onCancel}
-            className="bg-gray-300 text-gray-700 px-4 py-2 rounded-md hover:bg-gray-400"
-          >
-            Cancelar
-          </button>
-        )}
+        <button
+          type="button"
+          onClick={onCancel}
+          className="bg-gray-300 text-gray-700 px-4 py-2 rounded-md hover:bg-gray-400"
+        >
+          Cancelar
+        </button>
       </div>
     </form>
   );

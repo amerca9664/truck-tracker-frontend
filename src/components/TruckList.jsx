@@ -1,4 +1,4 @@
-export default function TruckList({ trucks, onEdit, onDelete }) {
+export default function TruckList({ trucks, onEdit, onDelete, pagination, onPageChange }) {
   if (trucks.length === 0) {
     return (
       <div className="bg-white rounded-lg shadow-md p-8 text-center text-gray-500">
@@ -6,6 +6,8 @@ export default function TruckList({ trucks, onEdit, onDelete }) {
       </div>
     );
   }
+
+  const { total, totalPages, page } = pagination;
 
   return (
     <div className="bg-white rounded-lg shadow-md overflow-hidden">
@@ -49,6 +51,28 @@ export default function TruckList({ trucks, onEdit, onDelete }) {
           ))}
         </tbody>
       </table>
+
+      {totalPages > 1 && (
+        <div className="flex items-center justify-between px-4 py-3 border-t border-gray-200">
+          <button
+            onClick={() => onPageChange(page - 1)}
+            disabled={page === 1}
+            className="px-3 py-1 text-sm rounded-md border border-gray-300 hover:bg-gray-50 disabled:opacity-40 disabled:cursor-not-allowed"
+          >
+            Anterior
+          </button>
+          <p className="text-sm text-gray-600">
+            Pagina {page} de {totalPages} ({total} registros)
+          </p>
+          <button
+            onClick={() => onPageChange(page + 1)}
+            disabled={page === totalPages}
+            className="px-3 py-1 text-sm rounded-md border border-gray-300 hover:bg-gray-50 disabled:opacity-40 disabled:cursor-not-allowed"
+          >
+            Siguiente
+          </button>
+        </div>
+      )}
     </div>
   );
 }

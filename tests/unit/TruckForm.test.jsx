@@ -13,15 +13,15 @@ describe('TruckForm', () => {
     expect(screen.getByLabelText(/carga contenida/i)).toBeInTheDocument();
   });
 
-  it('debe mostrar el titulo correcto al registrar', () => {
+  it('debe mostrar el boton de registrar sin initialData', () => {
     render(<TruckForm onSubmit={vi.fn()} />);
-    expect(screen.getByText('Registrar Llegada')).toBeInTheDocument();
+    expect(screen.getByText('Registrar')).toBeInTheDocument();
   });
 
-  it('debe mostrar el titulo correcto al editar', () => {
+  it('debe mostrar el boton de actualizar con initialData', () => {
     const initial = { modelo: 'Volvo', matricula: 'ABC-123', hora_llegada: '2024-01-15T10:30', carga_contenida: 'Ropa' };
     render(<TruckForm onSubmit={vi.fn()} initialData={initial} />);
-    expect(screen.getByText('Editar Camion')).toBeInTheDocument();
+    expect(screen.getByText('Actualizar')).toBeInTheDocument();
   });
 
   it('debe mostrar el boton cancelar cuando se pasa onCancel', () => {
