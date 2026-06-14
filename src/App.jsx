@@ -18,11 +18,12 @@ function App() {
   const formRef = useRef(null);
 
   const search = useDebounce(searchInput);
+  const datesComplete = dateFrom && dateTo;
 
   const { trucks, loading, error, refresh, setError, pagination } = useTrucks({
     page,
     limit: 5,
-    search,
+    search: datesComplete ? search : '',
     dateFrom,
     dateTo,
   });
