@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, forwardRef } from 'react';
 
 const INITIAL_STATE = {
   modelo: '',
@@ -16,8 +16,8 @@ const formatInitialData = (data) => {
       : INITIAL_STATE.hora_llegada,
   };
 };
-//HOLA
-export default function TruckForm({ onSubmit, initialData, onCancel }) {
+
+const TruckForm = forwardRef(function TruckForm({ onSubmit, initialData, onCancel }, ref) {
   const [form, setForm] = useState(() => formatInitialData(initialData));
   const [loading, setLoading] = useState(false);
 
@@ -48,6 +48,7 @@ export default function TruckForm({ onSubmit, initialData, onCancel }) {
         <div>
           <label htmlFor="modelo" className="block text-sm font-medium text-gray-700 mb-1">Modelo</label>
           <input
+            ref={ref}
             id="modelo"
             type="text"
             name="modelo"
@@ -117,4 +118,6 @@ export default function TruckForm({ onSubmit, initialData, onCancel }) {
       </div>
     </form>
   );
-}
+});
+
+export default TruckForm;

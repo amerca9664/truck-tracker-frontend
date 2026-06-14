@@ -10,13 +10,14 @@ export default function TruckList({ trucks, onEdit, onDelete }) {
   return (
     <div className="bg-white rounded-lg shadow-md overflow-hidden">
       <table className="w-full">
+        <caption className="sr-only">Lista de registros de llegada de camiones</caption>
         <thead className="bg-gray-50">
           <tr>
-            <th className="px-4 py-3 text-left text-sm font-semibold text-gray-700">Modelo</th>
-            <th className="px-4 py-3 text-left text-sm font-semibold text-gray-700">Matricula</th>
-            <th className="px-4 py-3 text-left text-sm font-semibold text-gray-700">Hora Llegada</th>
-            <th className="px-4 py-3 text-left text-sm font-semibold text-gray-700">Carga</th>
-            <th className="px-4 py-3 text-center text-sm font-semibold text-gray-700">Acciones</th>
+            <th scope="col" className="px-4 py-3 text-left text-sm font-semibold text-gray-700">Modelo</th>
+            <th scope="col" className="px-4 py-3 text-left text-sm font-semibold text-gray-700">Matricula</th>
+            <th scope="col" className="px-4 py-3 text-left text-sm font-semibold text-gray-700">Hora Llegada</th>
+            <th scope="col" className="px-4 py-3 text-left text-sm font-semibold text-gray-700">Carga</th>
+            <th scope="col" className="px-4 py-3 text-center text-sm font-semibold text-gray-700">Acciones</th>
           </tr>
         </thead>
         <tbody className="divide-y divide-gray-200">
@@ -31,12 +32,14 @@ export default function TruckList({ trucks, onEdit, onDelete }) {
               <td className="px-4 py-3 text-sm text-center">
                 <button
                   onClick={() => onEdit(truck)}
+                  aria-label={`Editar camión ${truck.matricula}`}
                   className="text-blue-600 hover:text-blue-800 mr-3"
                 >
                   Editar
                 </button>
                 <button
                   onClick={() => onDelete(truck._id)}
+                  aria-label={`Eliminar camión ${truck.matricula}`}
                   className="text-red-600 hover:text-red-800"
                 >
                   Eliminar
