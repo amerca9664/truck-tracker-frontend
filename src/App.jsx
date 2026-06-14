@@ -4,17 +4,20 @@ import TruckForm from './components/TruckForm';
 import TruckList from './components/TruckList';
 import Modal from './components/Modal';
 import { useTrucks } from './hooks/useTrucks';
+import { useDebounce } from './hooks/useDebounce';
 import { createTruck, updateTruck, deleteTruck } from './services/api';
 
 function App() {
   const [page, setPage] = useState(1);
-  const [search, setSearch] = useState('');
+  const [searchInput, setSearchInput] = useState('');
   const [dateFrom, setDateFrom] = useState('');
   const [dateTo, setDateTo] = useState('');
   const [editingTruck, setEditingTruck] = useState(null);
   const [showNewModal, setShowNewModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
   const formRef = useRef(null);
+
+  const search = useDebounce(searchInput);
 
   const { trucks, loading, error, refresh, setError, pagination } = useTrucks({
     page,
@@ -71,7 +74,7 @@ function App() {
   };
 
   const handleSearch = (value) => {
-    setSearch(value);
+    setSearchInput(value);
     setPage(1);
   };
 
@@ -86,13 +89,13 @@ function App() {
   };
 
   const clearFilters = () => {
-    setSearch('');
+    setSearchInput('');
     setDateFrom('');
     setDateTo('');
     setPage(1);
   };
 
-  const hasFilters = search || dateFrom || dateTo;
+  const hasFilters = searchInput || dateFrom || dateTo;
 
   return (
     <div className="min-h-screen bg-gray-100 py-8">
@@ -131,7 +134,7 @@ function App() {
             <div className="flex flex-col sm:flex-row gap-3">
               <input
                 type="text"
-                value={search}
+                value={searchInput}
                 onChange={(e) => handleSearch(e.target.value)}
                 placeholder="Buscar por modelo, matricula o carga..."
                 className="border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
