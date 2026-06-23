@@ -1,5 +1,20 @@
 # Changelog
 
+## [1.1.0](https://github.com/amerca9664/truck-tracker-frontend/compare/truck-tracker-frontend-v1.0.0...truck-tracker-frontend-v1.1.0) (2026-06-23)
+
+
+### Features
+
+* add Excel upload functionality with validation and user feedback ([5931bd8](https://github.com/amerca9664/truck-tracker-frontend/commit/5931bd8ed1a0d578c997884c00704fdba9e9efbe))
+* enhance app structure and accessibility features ([0d27b98](https://github.com/amerca9664/truck-tracker-frontend/commit/0d27b98881dbc37561e5228298aea0e03ee8e83e))
+* implement truck management features with pagination, filtering, and modals ([18a0c6b](https://github.com/amerca9664/truck-tracker-frontend/commit/18a0c6be37ff2494944b988bb8d9e33ada96b13d))
+
+
+### Bug Fixes
+
+* implement debouncing for search input in truck management ([bab948e](https://github.com/amerca9664/truck-tracker-frontend/commit/bab948eeb5c16d93c7963b14d1f428b42bdc9c68))
+* update search logic to only include search input when date range is complete ([29980b4](https://github.com/amerca9664/truck-tracker-frontend/commit/29980b4a89ca5593abf124ab9e6e6e34a943428f))
+
 ## 1.0.0 (2026-06-03)
 
 
