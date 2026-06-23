@@ -46,3 +46,19 @@ export const deleteTruck = async (id) => {
   if (!response.ok) throw new Error('Error al eliminar registro');
   return response.json();
 };
+
+export const uploadExcel = async (file) => {
+  const formData = new FormData();
+  formData.append('file', file);
+
+  const response = await fetch(`${API_URL}/upload/excel`, {
+    method: 'POST',
+    body: formData,
+  });
+
+  if (!response.ok) {
+    const error = await response.json();
+    throw new Error(error.message || 'Error al subir el archivo');
+  }
+  return response.json();
+};

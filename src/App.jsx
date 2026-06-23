@@ -2,6 +2,7 @@ import { useState, useRef } from 'react';
 import Swal from 'sweetalert2';
 import TruckForm from './components/TruckForm';
 import TruckList from './components/TruckList';
+import ExcelUpload from './components/ExcelUpload';
 import Modal from './components/Modal';
 import { useTrucks } from './hooks/useTrucks';
 import { useDebounce } from './hooks/useDebounce';
@@ -15,6 +16,7 @@ function App() {
   const [editingTruck, setEditingTruck] = useState(null);
   const [showNewModal, setShowNewModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
+  const [showUploadModal, setShowUploadModal] = useState(false);
   const formRef = useRef(null);
 
   const search = useDebounce(searchInput);
@@ -131,6 +133,12 @@ function App() {
             >
               + Nuevo Camion
             </button>
+            <button
+              onClick={() => setShowUploadModal(true)}
+              className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700"
+            >
+              Subir Excel
+            </button>
 
             <div className="flex flex-col sm:flex-row gap-3">
               <input
@@ -213,6 +221,19 @@ function App() {
             onCancel={() => { setShowEditModal(false); setEditingTruck(null); }}
           />
         )}
+      </Modal>
+
+      <Modal
+        isOpen={showUploadModal}
+        onClose={() => setShowUploadModal(false)}
+        title="Subir Excel"
+      >
+        <ExcelUpload
+          onUploadComplete={() => {
+            setShowUploadModal(false);
+            refresh();
+          }}
+        />
       </Modal>
     </div>
   );
