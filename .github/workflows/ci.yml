@@ -19,7 +19,7 @@ jobs:
         with:
           version: 11
       - name: Instalar dependencias
-        run: pnpm install --prod=false
+        run: pnpm add eslint @eslint/js --save-false
       - name: Lint
         run: pnpm lint
 
@@ -32,7 +32,7 @@ jobs:
         with:
           version: 11
       - name: Instalar dependencias
-        run: pnpm install --prod=false
+        run: pnpm install
       - name: Test
         run: pnpm test
 
