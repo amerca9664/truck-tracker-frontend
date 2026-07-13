@@ -19,7 +19,7 @@ jobs:
         with:
           version: 11
       - name: Instalar dependencias
-        run: pnpm add eslint @eslint/js --save-false
+        run: pnpm --package=eslint --package=@eslint/js dlx eslint .
       - name: Lint
         run: pnpm lint
 
