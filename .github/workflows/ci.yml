@@ -18,10 +18,8 @@ jobs:
         uses: pnpm/action-setup@v2
         with:
           version: 11
-      - name: Instalar dependencias
-        run: pnpm install
       - name: Lint
-        run: pnpm lint
+        run: pnpm dlx eslint .
 
   testFrontend:
     runs-on: ubuntu-latest
